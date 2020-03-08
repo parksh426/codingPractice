@@ -2,6 +2,9 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 import main.BruteForceProblem3;
@@ -15,6 +18,14 @@ public class BruteForceProblem3Test {
 		int expected = 2;
 		
 		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testMakeIndex() {
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		Set<String> result = new HashSet<String>();
+		brute3.makeIndex("", "123", 2, result);
+		
 	}
 
 }

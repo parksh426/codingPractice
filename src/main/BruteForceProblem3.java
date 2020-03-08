@@ -1,5 +1,8 @@
 package main;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class BruteForceProblem3 {
 	
 	/*
@@ -53,8 +56,44 @@ return
 
 
 	public int solution(int[][] baseball) {
-		int answer = 0;
-		return answer;
+//		int answer = 0;
+		
+		Set<String> numSet = new HashSet<String>();
+		Set<String> tempSet;
+		
+		for(int i=0; i<baseball.length; i++) {
+			if(i == 0) {
+				numSet = makePossibleSet(baseball[i]);
+			}
+			else {
+				tempSet = makePossibleSet(baseball[i]);
+				numSet.retainAll(tempSet);
+			}
+		}
+		
+		return numSet.size();
+	}
+	
+	public Set<String> makePossibleSet(int[] guess){
+		Set<String> result = new HashSet<String>();
+		
+		String question = String.valueOf(guess[0]);
+		int strike = guess[1];
+		int ball = guess[2];
+		
+		return result;
+	}
+	
+	public void makeIndex(String prefix, String str, int length, Set<String> result) {
+		if(prefix != null && prefix.length() == length) {
+			result.add(prefix);
+			System.out.println(prefix);
+		}
+		else if(prefix.length() < length) {
+			for(int i=0; i<str.length(); i++) {
+				makeIndex(prefix+str.charAt(i), str.substring(0, i) + str.substring(i+1, str.length()), length, result);
+			}
+		}
 	}
 
 }
