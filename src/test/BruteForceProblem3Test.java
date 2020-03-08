@@ -22,10 +22,16 @@ public class BruteForceProblem3Test {
 	
 	@Test
 	public void testMakeIndex() {
-		BruteForceProblem3 brute3 = new BruteForceProblem3();
-		Set<String> result = new HashSet<String>();
-		brute3.makeIndex("", "123", 2, result);
+//		BruteForceProblem3 brute3 = new BruteForceProblem3();
+//		Set<String> result = new HashSet<String>();
+//		brute3.makeIndex("", "123", 2, result);
 		
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		String s = "123";
+		int r = 1;
+		Set<String> result = new HashSet<String>();
+		String[] value = new String[r];
+		brute3.makeIndex(0, 0, s, r, value, result);
 	}
 
 }
