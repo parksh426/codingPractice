@@ -1,6 +1,8 @@
 package main;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
 public class BruteForceProblem3 {
@@ -83,13 +85,63 @@ return
 		
 		String[] value = new String[strike];
 		Set<String> strikes = new HashSet<String>();
-		makeIndex(0, 0, "123", strike, value, strikes);
+		makeIndex(0, 0, "012", strike, value, strikes);
 		
-		Set<String[]> strikesBalls = new HashSet<String[]>(); // 0: strike index, 1: ball index, 2: question
+		Set<String[]> strikesBalls = new HashSet<String[]>(); // 0: strike index, 1: ball index, 2: out, 3: question
 		String[] balls = new String[ball];
 		for(String s : strikes) {
 			String notS = notStrikes(s);
 			makeBalls(0, 0, s, notS, ball, balls, strikesBalls, question);
+		}
+		
+		// strikesBalls 의 각 원소에 대해서 가능한 정답의 집합을 result set 에 저장
+		String numList = "123456789";
+		int[] onOff;
+		LinkedList<String> answer;
+		for(String[] sb : strikesBalls) {
+			// permutation to find possible answers
+			onOff = new int[9];
+			answer = new LinkedList<String>();
+			findPossibleAnswers(sb, result, numList, onOff, answer);
+		}
+		
+		return result;
+	}
+	
+	public void findPossibleAnswers(String[] sb, Set<String> result, String numList, int[] onOff, LinkedList<String> answer) {
+		if(answer.size() == 3) {
+			String a = "";
+			Iterator<String> it = answer.iterator();
+			while(it.hasNext()) {
+				a += it.next();
+			}
+			System.out.println("a:" + a);
+			result.add(a);
+			return;
+		}
+		
+		for(int i=0; i<numList.length(); i++) {
+			if(onOff[i] == 0) {
+				onOff[i] = 1;
+				answer.add(""+numList.charAt(i));
+				findPossibleAnswers(sb, result, numList, onOff, answer);
+				answer.removeLast();
+				onOff[i] = 0;
+			}
+		}
+	}
+	
+	public String findOut(String strike, String ball) {
+		String result = "";
+		
+		if(!strike.contains("0") && !ball.contains("0")) {
+			result += "0";
+		}
+		if(!strike.contains("1") && !ball.contains("1")) {
+			result += "1";
+		}
+		if(!strike.contains("2") && !ball.contains("2")) {
+			result += "2";
 		}
 		
 		return result;
@@ -97,14 +149,16 @@ return
 	
 	public void makeBalls(int index, int target, String strikes, String notStrikes, int ballCount, String[] value, Set<String[]> strikesBalls, String question) {
 		if(ballCount == 0) {
-			String[] result = new String[2];
+			String[] result = new String[4];
 			result[0] = strikes;
 			String temp = "";
 			for(String s : value) {
 				temp += s;
 			}
 			result[1] = temp;
-			System.out.println("Strikes:" + strikes + ", balls:" + temp + ", question:" + question);
+			result[2] = findOut(result[0], result[1]);
+			result[3] = question;
+			System.out.println("Strikes:" + result[0] + ", balls:" + result[1] + ", out:" + result[2] + ", question:" + result[3]);
 			strikesBalls.add(result);
 			return;
 		}
@@ -123,14 +177,14 @@ return
 	
 	public String notStrikes(String strikes) {
 		String result = "";
+		if(!strikes.contains("0")) {
+			result += "0";
+		}
 		if(!strikes.contains("1")) {
 			result += "1";
 		}
 		if(!strikes.contains("2")) {
 			result += "2";
-		}
-		if(!strikes.contains("3")) {
-			result += "3";
 		}
 		return result;
 	}
