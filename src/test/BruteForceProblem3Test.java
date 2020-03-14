@@ -21,6 +21,61 @@ public class BruteForceProblem3Test {
 	}
 	
 	@Test
+	public void testSolution2() {
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		int result = brute3.solution(new int[][] {{123, 0, 0}});
+		int expected = 120;
+		
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testSolution3() {
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		int result = brute3.solution(new int[][] {{123, 0, 0}, {234, 0, 0}});
+		int expected = 60;
+		
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testSolution4() {
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		int result = brute3.solution(new int[][] {{123, 0, 0}, {234, 0, 0}, {345, 0, 0}});
+		int expected = 24;
+		
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testSolution5() {
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		int result = brute3.solution(new int[][] {{123, 3, 0}});
+		int expected = 1;
+		
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testSolution6() {
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		int result = brute3.solution(new int[][] {{123, 2, 0}});
+		int expected = 18;
+		
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testSolution7() {
+		System.out.println("testSolution7");
+		BruteForceProblem3 brute3 = new BruteForceProblem3();
+		int result = brute3.solution(new int[][] {{123, 0, 3}});
+		int expected = 2;
+		
+		assertEquals(expected, result);
+	}
+	
+	@Test
 	public void testMakeIndex() {
 //		BruteForceProblem3 brute3 = new BruteForceProblem3();
 //		Set<String> result = new HashSet<String>();

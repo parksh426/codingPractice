@@ -73,6 +73,14 @@ return
 			}
 		}
 		
+		System.out.println("-----Answer------");
+		for(String s : numSet) {
+			System.out.print(s);
+			System.out.print(", ");
+		}
+		System.out.println();
+		System.out.println("-----------------");
+		
 		return numSet.size();
 	}
 	
@@ -101,6 +109,16 @@ return
 		for(String[] sb : strikesBalls) {
 			// permutation to find possible answers
 			onOff = new int[9];
+			// out check
+			for(int i=0; i<sb[2].length(); i++) {
+				System.out.println("1onOffIndex:" + (Integer.valueOf(""+sb[3].charAt(Integer.valueOf(""+sb[2].charAt(i))))-1));
+				onOff[Integer.valueOf(""+sb[3].charAt(Integer.valueOf(""+sb[2].charAt(i))))-1] = 1;
+			}
+			// strike check
+			for(int i=0; i<sb[0].length(); i++) {
+				System.out.println("2onOffIndex:" + (Integer.valueOf(""+sb[3].charAt(Integer.valueOf(""+sb[0].charAt(i))))-1));
+				onOff[Integer.valueOf(""+sb[3].charAt(Integer.valueOf(""+sb[0].charAt(i))))-1] = 1;
+			}
 			answer = new LinkedList<String>();
 			findPossibleAnswers(sb, result, numList, onOff, answer);
 		}
@@ -115,13 +133,34 @@ return
 			while(it.hasNext()) {
 				a += it.next();
 			}
-			System.out.println("a:" + a);
-			result.add(a);
+				
+			if( ballCheck(a, sb[1], sb[3]) ) {
+				System.out.println("a:" + a);
+				result.add(a);
+			}
+			return;
+		}
+		
+		// strike check
+		System.out.println("1answer.size():" + answer.size() + ", sb[0]:" + sb[0]);
+		if(sb[0].contains(""+answer.size())) {
+			int temp = Integer.valueOf(""+sb[3].charAt(answer.size()));
+			System.out.println("2answer.size():" + answer.size() + ", sb[0]:" + sb[0] + ", temp:" + temp);
+			answer.add(""+temp);
+			findPossibleAnswers(sb, result, numList, onOff, answer);
+			answer.removeLast();
 			return;
 		}
 		
 		for(int i=0; i<numList.length(); i++) {
+			
 			if(onOff[i] == 0) {
+				// ball check
+				if(sb[1].contains(""+answer.size()) && sb[3].charAt(answer.size()) == numList.charAt(i)) {
+					System.out.println("ball check - answer.size():" + answer.size() + ", sb[1]:" + sb[1] + ", temp:" + sb[3].charAt(answer.size()));
+					continue;
+				}
+				
 				onOff[i] = 1;
 				answer.add(""+numList.charAt(i));
 				findPossibleAnswers(sb, result, numList, onOff, answer);
@@ -129,6 +168,25 @@ return
 				onOff[i] = 0;
 			}
 		}
+	}
+	
+	public boolean ballCheck(String s, String ball, String question) {
+		boolean result = true;
+		
+		// ball contaion check
+		for(char b : ball.toCharArray()) {
+			if(!s.contains(""+question.charAt(Integer.valueOf(""+b)))) {
+				return false;
+			}
+		}
+		// ball position check
+		for(int i=0; i<ball.length(); i++) {
+			if(s.charAt(Integer.valueOf(""+ball.charAt(i))) == question.charAt(Integer.valueOf(""+ball.charAt(i)))) {
+				return false;
+			}
+		}
+		
+		return result;
 	}
 	
 	public String findOut(String strike, String ball) {
