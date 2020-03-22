@@ -1,6 +1,6 @@
 package main;
 
-public class GreedyProblem2 {
+public class GreedyProblem3 {
 
 	/*
 문제 설명
