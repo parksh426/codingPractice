@@ -31,5 +31,13 @@ public class GreedyProblem3Test {
 		String expected = "775841";
 		assertEquals(result, expected);
 	}
+	
+	@Test
+	public void testSolution4() {
+		GreedyProblem3 greedy2 = new GreedyProblem3();
+		String result = greedy2.solution("1924", 3);
+		String expected = "9";
+		assertEquals(result, expected);
+	}
 
 }
