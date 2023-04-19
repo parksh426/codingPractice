@@ -1,4 +1,4 @@
-## 안녕하세요
+## 안녕하세요 Java Coding Practice 입니다.
 ---
 - list
 
